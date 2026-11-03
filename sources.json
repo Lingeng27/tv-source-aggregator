@@ -1,0 +1,13 @@
+[
+  { "name": "⭐老刘备", "url": "https://raw.liucn.cc/box/m.json" },
+  { "name": "⭐OK影视", "url": "https://cdn.jsdelivr.net/gh/2hacc/TVBox@main/oktv.json" },
+  { "name": "🪞OK影视(fastly)", "url": "https://fastly.jsdelivr.net/gh/2hacc/TVBox@main/oktv.json" },
+  { "name": "⭐高天流云", "url": "https://fastly.jsdelivr.net/gh/gaotianliuyun/gao@master/js.json" },
+  { "name": "饭太硬", "url": "http://www.饭太硬.com/tv" },
+  { "name": "饭太硬备用", "url": "http://fty.888484.xyz/tv" },
+  { "name": "肥猫", "url": "http://肥猫.com/" },
+  { "name": "摸鱼(4K)", "url": "http://我不是.摸鱼儿.top" },
+  { "name": "王二小放牛娃", "url": "https://9280.kstore.vip/newwex.json" },
+  { "name": "云星日记", "url": "http://itvbox.cc/云星日记" },
+  { "name": "喵影", "url": "http://meowtv.cn/tv" }
+]
