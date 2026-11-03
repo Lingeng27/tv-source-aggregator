@@ -8,13 +8,13 @@
 
 ## 产物与配置地址
 
-仓库每天自动生成并提交了三个文件，复制下面地址填进播放器即可（把 `<你的用户名>` 换成你的 GitHub 账号名）：
+仓库每天自动生成并提交了三个文件，复制下面地址填进播放器即可：
 
 | 用途 | 文件名 | 配置地址（推荐走 gh-proxy，国内快） |
 |---|---|---|
-| **影视（多仓·推荐）** | `aggregate.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/<你的用户名>/tv-source-aggregator/main/aggregate.json` |
-| 影视（合并单仓·进阶） | `tv.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/<你的用户名>/tv-source-aggregator/main/tv.json` |
-| **电视直播（自动更新）** | `live.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/<你的用户名>/tv-source-aggregator/main/live.m3u` |
+| **影视（多仓·推荐）** | `aggregate.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/aggregate.json` |
+| 影视（合并单仓·进阶） | `tv.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/tv.json` |
+| **电视直播（自动更新）** | `live.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/live.m3u` |
 
 > 原始直连地址（不绕代理）：把上面 `https://gh-proxy.com/` 去掉即可。国内网络建议保留 gh-proxy 前缀。
 
@@ -51,7 +51,7 @@ git push -u origin main
 # 方式 B：手动建仓后
 # 在 github.com 新建空仓库 tv-source-aggregator（不要勾 README）
 git branch -M main
-git remote add origin https://github.com/<你的用户名>/tv-source-aggregator.git
+git remote add origin https://github.com/Lingeng27/tv-source-aggregator.git
 git push -u origin main
 ```
 
