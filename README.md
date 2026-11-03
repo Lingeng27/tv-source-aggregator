@@ -33,9 +33,13 @@
 
 ---
 
-## 部署到 GitHub（一次性）
+## 部署状态（✅ 已完成，无需你操作）
 
-本机已搭好整套仓库，你只需建仓并推送：
+本仓库已经由维护者部署到 GitHub（公开仓库 `Lingeng27/tv-source-aggregator`），所有文件与每日自动更新工作流均已推送，**你不需要再执行下面任何命令**。首次自动更新已成功运行（生成 `chore: 自动更新播放源` 提交），证明仓库与推送权限均正常。
+
+> 下面这段仅作**参考 / 迁移用**：如果你将来想把这个仓库搬到自己的另一个 GitHub 账号，才需要按此操作。正常使用者请直接跳过。
+
+<details><summary>从零部署的参考命令（一般不用看）</summary>
 
 ```bash
 cd tv-source-aggregator
@@ -59,6 +63,8 @@ git push -u origin main
 - 进入仓库 **Settings → Actions → General → Workflow permissions**，确认是 **Read and write**（工作流里已声明 `permissions: contents: write`，通常默认即可）。
 - 进入 **Actions** 标签页，手动跑一次 **Update Sources** 验证；之后每天北京时间 01:00 自动更新。
 - 想立刻更新？Actions 页面点 **Update Sources → Run workflow**。
+
+</details>
 
 ---
 
