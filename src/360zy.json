@@ -1,0 +1,18 @@
+{
+  "spider": "",
+  "sites": [
+    {
+      "key": "360zy",
+      "name": "360zy资源(天微提取)",
+      "type": 1,
+      "api": "https://360zy.com/api.php/provide/vod",
+      "searchable": 1,
+      "changeable": 1,
+      "ext": "https://360zy.com"
+    }
+  ],
+  "parses": [],
+  "rules": {},
+  "flags": {},
+  "ua": "Mozilla/5.0"
+}

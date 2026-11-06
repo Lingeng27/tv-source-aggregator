@@ -1,0 +1,18 @@
+{
+  "spider": "",
+  "sites": [
+    {
+      "key": "yzzy",
+      "name": "一直看资源(天微提取)",
+      "type": 1,
+      "api": "https://api.yzzy-api.com/inc/api.php",
+      "searchable": 1,
+      "changeable": 1,
+      "ext": "https://api.yzzy-api.com"
+    }
+  ],
+  "parses": [],
+  "rules": {},
+  "flags": {},
+  "ua": "Mozilla/5.0"
+}

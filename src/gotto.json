@@ -1,0 +1,18 @@
+{
+  "spider": "",
+  "sites": [
+    {
+      "key": "gotto",
+      "name": "Gotto资源(天微提取)",
+      "type": 1,
+      "api": "http://m51.gotto.top/api.php/v1.vod",
+      "searchable": 1,
+      "changeable": 1,
+      "ext": "http://m51.gotto.top"
+    }
+  ],
+  "parses": [],
+  "rules": {},
+  "flags": {},
+  "ua": "Mozilla/5.0"
+}

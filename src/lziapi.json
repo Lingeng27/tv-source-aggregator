@@ -1,0 +1,18 @@
+{
+  "spider": "",
+  "sites": [
+    {
+      "key": "lziapi",
+      "name": "智子资源(天微提取)",
+      "type": 1,
+      "api": "http://cj.lziapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "changeable": 1,
+      "ext": "http://cj.lziapi.com"
+    }
+  ],
+  "parses": [],
+  "rules": {},
+  "flags": {},
+  "ua": "Mozilla/5.0"
+}
