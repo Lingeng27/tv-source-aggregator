@@ -43,6 +43,22 @@
     {
       "name": "喵影",
       "url": "http://meowtv.cn/tv"
+    },
+    {
+      "name": "360zy(天微提取)",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/src/360zy.json"
+    },
+    {
+      "name": "智子资源(天微提取)",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/src/lziapi.json"
+    },
+    {
+      "name": "一直看资源(天微提取)",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/src/yzzy.json"
+    },
+    {
+      "name": "Gotto资源(天微提取)",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/src/gotto.json"
     }
   ]
 }
