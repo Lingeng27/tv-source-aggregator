@@ -13,5 +13,10 @@
   { "name": "360zy(天微提取)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/src/360zy.json" },
   { "name": "智子资源(天微提取)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/src/lziapi.json" },
   { "name": "一直看资源(天微提取)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/src/yzzy.json" },
-  { "name": "Gotto资源(天微提取)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/src/gotto.json" }
+  { "name": "Gotto资源(天微提取)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/src/gotto.json" },
+  { "name": "七星影视(天微APK)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/lines/qixing/api.json" },
+  { "name": "天微VIP线(天微APK)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/lines/tianwei-vip/api.json" },
+  { "name": "D佬线路(天微APK)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/lines/d-lao/api.json" },
+  { "name": "小米线路(天微APK)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/lines/xiaomi/api.json" },
+  { "name": "香雅情线(天微APK)", "url": "https://cdn.jsdelivr.net/gh/Lingeng27/tv-source-aggregator@main/lines/xiangyaqing/api.json" }
 ]
