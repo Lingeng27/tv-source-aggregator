@@ -1,5 +1,5 @@
 {
-  "spider": "./fty.jar;md5;3d161697458ecbcd2651a749db761ba1",
+  "spider": "https://raw.liucn.cc/box/fty.jar;md5;3d161697458ecbcd2651a749db761ba1",
   "sites": [
     {
       "key": "csp_douban",

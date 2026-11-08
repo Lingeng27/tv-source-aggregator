@@ -97,6 +97,22 @@ def merge_list(a, b):
     return out
 
 
+def resolve_spider(spider, base_url):
+    """把相对 spider 路径按源 URL 解析成绝对地址，保留 ;md5; 等后缀。
+    单仓合并时播放器会按 tv.json 的地址解析 spider，相对路径会指向本仓库而 404。"""
+    if not spider:
+        return spider
+    parts = spider.split(";")
+    path = parts[0].strip()
+    if not path or path.startswith(("http://", "https://", "ftp://")):
+        return spider
+    try:
+        abs_url = idna_url(urllib.parse.urljoin(base_url, path))
+    except Exception:
+        return spider
+    return ";".join([abs_url] + parts[1:])
+
+
 def collect_sites(url, depth=0, visited=None):
     """从一个地址提取 (sites字典, parses, rules, flags, spider, ua)。支持多仓递归一层。"""
     if visited is None:
@@ -113,7 +129,7 @@ def collect_sites(url, depth=0, visited=None):
     parses = data.get("parses", []) or []
     rules = data.get("rules") if isinstance(data.get("rules"), dict) else {}
     flags = data.get("flags") if isinstance(data.get("flags"), dict) else {}
-    spider = data.get("spider", "") or ""
+    spider = resolve_spider(data.get("spider", "") or "", url)
     ua = data.get("ua", "") or ""
     if depth < 1 and data.get("urls"):
         for sub in data["urls"]:
