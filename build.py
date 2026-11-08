@@ -14,6 +14,8 @@ TV 播放源聚合构建脚本（纯标准库，无第三方依赖）
 import json
 import os
 import sys
+import time
+import concurrent.futures
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -38,6 +40,8 @@ def idna_url(url):
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TIMEOUT = 25
+PROBE_TIMEOUT = 6      # 单路直播流探测超时
+PROBE_WORKERS = 24     # 健康检测并发数
 UA = "Mozilla/5.0 (Linux; Android 9; TVBox) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
 
 # 关闭证书校验（部分国内源证书不规范，避免误判失败；仅用于抓取公开索引）
@@ -206,6 +210,30 @@ def build_tv():
     print("[tv] 合并 %d 个站点 -> tv.json" % len(all_sites))
 
 
+def probe_stream(url):
+    """探测一路直播流，返回 (状态, 耗时ms)。
+    ok      : 有有效流内容（#EXTM3U / TS / 其他非空二进制）
+    dead    : 明确不可用，可剔除（403/404/410、HTML 错误页、空响应）
+              403 经多种 UA/Referer 复测均无法绕过，多为运营商 CDN 鉴权。
+    unknown : 400/5xx/超时/DNS/连接失败。可能是本机代理、CI 地域或临时网关问题，
+              一律保留防误杀。每次 CI 都从源清单重新探测，剔除可自愈。
+    """
+    try:
+        req = urllib.request.Request(idna_url(url), headers={"User-Agent": UA})
+        t0 = time.time()
+        with urllib.request.urlopen(req, timeout=PROBE_TIMEOUT, context=SSL_CTX) as r:
+            data = r.read(512)
+        ms = int((time.time() - t0) * 1000)
+        body = data.lstrip()
+        if not body or body.startswith(b"<"):
+            return "dead", ms
+        return "ok", ms
+    except urllib.error.HTTPError as e:
+        return ("dead", 0) if e.code in (403, 404, 410) else ("unknown", 0)
+    except Exception:
+        return "unknown", 0
+
+
 def build_live():
     sources = load_json("live_sources.json")
     entries = {}  # url -> extinf(可能多行)
@@ -238,13 +266,39 @@ def build_live():
         if os.path.exists(os.path.join(ROOT, "live.m3u")):
             print("[live] 本次全部源拉取失败，保留上次缓存 live.m3u")
             return
-    out = ["#EXTM3U"]
+
+    print("[live] 健康检测 %d 路 (并发 %d / 超时 %ds) ..." % (
+        len(order), PROBE_WORKERS, PROBE_TIMEOUT))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=PROBE_WORKERS) as ex:
+        health = dict(zip(order, ex.map(probe_stream, order)))
+    dead = [u for u in order if health[u][0] == "dead"]
+    order = [u for u in order if health[u][0] != "dead"]
+    n_ok = sum(1 for u in order if health[u][0] == "ok")
+    print("[live] 剔除死链 %d 路 (健康 %d / 未验证保留 %d)" % (
+        len(dead), n_ok, len(order) - n_ok))
+
+    if not order:
+        if os.path.exists(os.path.join(ROOT, "live.m3u")):
+            print("[live] 全部频道被判失效，保留上次缓存 live.m3u")
+            return
+
+    # 同频道(标题完全相同)的多路：健康优先、延迟低优先；频道首次出现顺序不变
+    groups = {}
     for u in order:
+        name = entries[u].split("\n")[0].rsplit(",", 1)[-1].strip()
+        groups.setdefault(name, []).append(u)
+    ranked = []
+    for us in groups.values():
+        us.sort(key=lambda u: (0 if health[u][0] == "ok" else 1, health[u][1]))
+        ranked.extend(us)
+
+    out = ["#EXTM3U"]
+    for u in ranked:
         for l in entries[u].split("\n"):
             out.append(l)
         out.append(u)
     write_text("live.m3u", "\n".join(out) + "\n")
-    print("[live] 合并 %d 个频道 -> live.m3u" % len(order))
+    print("[live] 合并 %d 个频道 -> live.m3u" % len(ranked))
 
 
 if __name__ == "__main__":
