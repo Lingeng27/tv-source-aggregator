@@ -12,9 +12,9 @@
 
 | 用途 | 文件名 | 配置地址（推荐走 gh-proxy，国内快） |
 |---|---|---|
-| **影视（多仓·推荐）** | `aggregate.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/aggregate.json` |
-| 影视（合并单仓·进阶） | `tv.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/tv.json` |
-| **电视直播（自动更新）** | `live.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/live.m3u` |
+| **YY ZONE影视（多仓·推荐）** | `aggregate.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/aggregate.json` |
+| YY ZONE影视（合并单仓） | `tv.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/tv.json` |
+| **YY ZONE电视直播（自动更新）** | `live.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/live.m3u` |
 
 > 原始直连地址（不绕代理）：把上面 `https://gh-proxy.com/` 去掉即可。国内网络建议保留 gh-proxy 前缀。
 
