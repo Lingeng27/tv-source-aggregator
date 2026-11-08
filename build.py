@@ -292,13 +292,22 @@ def build_live():
         us.sort(key=lambda u: (0 if health[u][0] == "ok" else 1, health[u][1]))
         ranked.extend(us)
 
-    out = ["#EXTM3U"]
-    for u in ranked:
-        for l in entries[u].split("\n"):
-            out.append(l)
-        out.append(u)
-    write_text("live.m3u", "\n".join(out) + "\n")
-    print("[live] 合并 %d 个频道 -> live.m3u" % len(ranked))
+    def emit(name, urls_order):
+        out = ["#EXTM3U"]
+        for u in urls_order:
+            for l in entries[u].split("\n"):
+                out.append(l)
+            out.append(u)
+        write_text(name, "\n".join(out) + "\n")
+
+    # 桌面端/多数宽带无 IPv6，字面量流必挂；单独出一份桌面版
+    desktop = [u for u in ranked if "://[" not in u]
+
+    emit("live.m3u", ranked)           # 兼容旧地址，等同全量
+    emit("live-tv.m3u", ranked)        # TV / 手机：全量，含 IPv6
+    emit("live-desktop.m3u", desktop)  # 桌面：剔除 IPv6
+    print("[live] 全量 %d / 桌面 %d (剔 IPv6 %d) -> live.m3u, live-tv.m3u, live-desktop.m3u" % (
+        len(ranked), len(desktop), len(ranked) - len(desktop)))
 
 
 if __name__ == "__main__":

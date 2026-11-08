@@ -8,15 +8,19 @@
 
 ## 产物与配置地址
 
-仓库每天自动生成并提交了三个文件，复制下面地址填进播放器即可：
+仓库每天自动生成并提交配置，复制下面地址填进播放器即可：
 
 | 用途 | 文件名 | 配置地址（推荐走 gh-proxy，国内快） |
 |---|---|---|
 | **YY ZONE影视（多仓·推荐）** | `aggregate.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/aggregate.json` |
 | YY ZONE影视（合并单仓） | `tv.json` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/tv.json` |
 | **YY ZONE电视直播（自动更新）** | `live.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/live.m3u` |
+| YY ZONE电视直播（桌面版） | `live-desktop.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/live-desktop.m3u` |
+| YY ZONE电视直播（TV/移动端） | `live-tv.m3u` | `https://gh-proxy.com/https://raw.githubusercontent.com/Lingeng27/tv-source-aggregator/main/live-tv.m3u` |
 
 > 原始直连地址（不绕代理）：把上面 `https://gh-proxy.com/` 去掉即可。国内网络建议保留 gh-proxy 前缀。
+>
+> 直播分端：三份都由每日健康检测剔除死链；`live-desktop.m3u` 额外剔除桌面无法使用的 IPv6 线路，`live-tv.m3u` 为全量（含 IPv6）。`live.m3u` 与 `live-tv.m3u` 内容一致，供旧地址继续用。推荐 Windows 桌面端用「桌面版」，电视 / 手机用「TV/移动端」。
 
 ---
 
