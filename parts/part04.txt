@@ -1,0 +1,98 @@
+    },
+    {
+      name: 'Huibq网易',
+      from: '旧包 Huibq v1.2.0（本地域名已死，改用其在线最新版 onrender 入口）',
+      // 192k 档实测会回落成酷我镜像链（有串歌风险），只挂 flac/320k/128k
+      q: ['flac24bit', 'flac', '320k', '128k'],
+      build: c => `https://lxmusicapi.onrender.com/url/wy/${enc(c.id)}/${enc(c.q)}`,
+      headers: { 'X-Request-Key': 'share-v3' },
+    },
+    {
+      name: 'HYW',
+      from: '上游 HYW 公益版',
+      // 只认 flac/320k/128k，192k 会 HTTP 400
+      q: ['flac24bit', 'flac', '320k', '128k'],
+      build: c => `http://103.79.184.97/api/music/url?source=wy&songId=${enc(c.id)}&quality=${c.q}&key=6C1F-53W0-GRKI-EVFG`,
+    },
+    {
+      name: 'FFAPI网易',
+      from: 'pdone 11-08 新增源 轻量音源 v2.1.0（qingliang）实测端点，flac 走 lossless 真无损',
+      q: ['flac24bit', 'flac', '320k', '128k'],
+      build: c => `https://ffapi.cn/int/v1/netease_url?id=${enc(c.id)}&quality=${FFAPI_Q[c.q] || 'exhigh'}`,
+    },
+    {
+      name: 'lzmhhh网易',
+      from: 'pdone 11-08 新增源 轻量音源 v2.1.0（qingliang），POST 表单，固定 320k',
+      q: ['320k'],
+      build: () => 'https://music.lzmhhh.com/api/music/url',
+      opts: c => ({
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Referer: 'https://music.lzmhhh.com/' },
+        body: `id=${enc(c.id)}&type=wy`,
+      }),
+    },
+    {
+      name: 'bileizhen网易',
+      from: 'pdone 11-08 新增源 轻量音源 v2.1.0（qingliang），302 直跳音频流',
+      asStream: true,
+      q: ['320k'],
+      build: c => `https://api.bileizhen.top/api/netease?id=${enc(c.id)}&level=exhigh`,
+    },
+  ],
+
+  tx: [
+    {
+      name: 'Vkeys无损',
+      from: '上游 Vkeys 公开接口',
+      q: ['flac24bit', 'flac'],
+      build: c => `https://api.vkeys.cn/music/tencent/song/link?mid=${enc(c.id)}`,
+    },
+    {
+      name: 'Vkeys',
+      from: '上游 Vkeys 公开接口',
+      build: c => `https://api.vkeys.cn/v2/music/tencent/geturl?mid=${enc(c.id)}`,
+    },
+    {
+      name: '收集聚合QQ',
+      from: '上游 收集聚合 / cyapi',
+      build: c => `https://cyapi.top/API/qq_music.php?apikey=1ffdf5733f5d538760e63d7e46ba17438d9f7b9dfc18c51be1109386fd74c3a1&type=json&mid=${enc(c.id)}`,
+    },
+    {
+      name: 'YuafengQQ',
+      from: '上游 Yuafeng 公开接口',
+      build: c => `https://api-v2.yuafeng.cn/API/qqmusic.php?type=${enc(TX_YF[c.q] || 'HQ')}&mid=${enc(c.id)}&apikey=3ff23523e47465224a3f48579acf41f241540ce04b6cc0b94164f37a5b6299d5`,
+    },
+    {
+      name: '流云BaiMusic',
+      from: '上游 流云 BaiMusic',
+      build: c => `https://api.liuyunidc.cn/baimusic/musicurl.php?source=tx&musicId=${enc(c.id)}&quality=${enc(c.q)}`,
+    },
+    {
+      name: 'HYW',
+      from: '上游 HYW 公益版',
+      build: c => `http://103.79.184.97/api/music/url?source=tx&songId=${enc(c.id)}&quality=${c.q}&key=6C1F-53W0-GRKI-EVFG`,
+    },
+    {
+      name: 'HuibqQQ',
+      from: '旧包 Huibq v1.2.0（在线最新版入口）',
+      build: c => `https://lxmusicapi.onrender.com/url/tx/${enc(c.id)}/${enc(c.q)}`,
+      headers: { 'X-Request-Key': 'share-v3' },
+    },
+    {
+      name: '讯汇QQ',
+      from: 'pdone 11-08 新增源 轻量音源 v2.1.0（qingliang）实测最稳新端点，music_url 字段',
+      build: c => `https://api.xunhuisi.store/API/QQMusic/Song.php?mid=${enc(c.id)}&type=json`,
+    },
+    {
+      name: 'lzmhhhQQ',
+      from: 'pdone 11-08 新增源 轻量音源 v2.1.0（qingliang），POST 表单，固定 320k',
+      q: ['320k'],
+      build: () => 'https://music.lzmhhh.com/api/music/url',
+      opts: c => ({
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Referer: 'https://music.lzmhhh.com/' },
+        body: `id=${enc(c.id)}&type=qq`,
+      }),
+    },
+  ],
+
