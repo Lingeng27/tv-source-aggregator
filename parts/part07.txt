@@ -1,0 +1,98 @@
+function precheck(url) {
+  if (!CFG.enablePrecheck) return Promise.resolve(true)
+  return new Promise(resolve => {
+    let settled = false
+    const done = v => { if (!settled) { settled = true; resolve(v) } }
+    const timer = setTimeout(() => done(true), CFG.precheckTimeout)
+    try {
+      request(url, { method: 'GET', timeout: CFG.precheckTimeout, headers: { 'User-Agent': UA, Range: 'bytes=0-511' } }, (err, res) => {
+        clearTimeout(timer)
+        if (err) return done(true)   // 网络抖动不判死，交给播放器
+        const code = (res && res.statusCode) || 0
+        if (code >= 400) return done(false)
+        // 手机版的 request 对二进制流可能不给 statusCode（code=0），此时不能判死，交给播放器
+        if (!code) return done(true)
+        const body = res && res.body
+        if (typeof body === 'string' && (/^\s*<(!doctype|html)/i.test(body) || /^\s*\{/.test(body))) return done(false)
+        done(true)
+      })
+    } catch (e) { clearTimeout(timer); done(true) }
+  })
+}
+
+/**
+ * 强制 https：各平台接口返回的 CDN 直链常写成 http://，手机版（Android）会拦明文请求，
+ * 表现为"取到链接但一点声音都没有"。以下 CDN 均已实测同时支持 TLS，改写为 https 无副作用。
+ * 覆盖：酷我(car-er/other-er/kw-er)、网易(m701/m801 music.126.net)、
+ *      QQ(ws/isure/aqqmusic stream.qqmusic.qq.com、aqqmusic.tc.qq.com)、咪咕(freetyst.nf.migu.cn)
+ */
+const SECURE_RE = /^http:\/\/(?:[a-z0-9-]+\.)*(?:kuwo\.cn|music\.126\.net|qqmusic\.qq\.com|tc\.qq\.com|migu\.cn)\//i
+function toSecure(url) {
+  if (typeof url !== 'string') return url
+  return SECURE_RE.test(url) ? url.replace(/^http:/i, 'https:') : url
+}
+
+// ==================== 单链路执行 ====================
+async function runLink(link, ctx) {
+  const t0 = Date.now()
+  // asStream：build() 直接给的就是可播地址（多为 302 跳真实音频），不需要再解析接口正文
+  if (link.asStream) {
+    const direct = toSecure(link.build(ctx))
+    if (!/^https?:\/\//i.test(direct)) throw new Error('直链无效')
+    if (!(await precheck(direct))) throw new Error('直链不可播放')
+    const meta = await probeSize(direct)
+    const preview = meta.total > 0 && meta.total < 500000
+    return { url: direct, ms: Date.now() - t0, preview }
+  }
+  const o = (typeof link.opts === 'function' ? link.opts(ctx) : link.opts) || {}
+  const body = await httpGet(link.build(ctx), {
+    method: o.method,
+    body: o.body,
+    headers: Object.assign({}, H_JSON, link.headers || {}, o.headers || {}),
+    timeout: CFG.reqTimeout,
+  })
+  // parse 允许异步（两段式链路：先检索再取链）
+  let direct = link.parse ? link.parse(body, ctx) : pickUrl(body)
+  if (direct && typeof direct.then === 'function') direct = await direct
+  if (!isLikelyAudio(direct)) throw new Error('未取到直链')
+  direct = toSecure(direct)
+  if (!(await precheck(direct))) throw new Error('直链不可播放')
+  // 酷我对 VIP/付费曲只给 aac 试听片段（约 22s），URL 特征：路径 .aac 或 query 带 format$aac
+  const preview = /\.aac(?:[?#]|$)/i.test(direct) || /[?&]format\$aac/i.test(direct)
+  return { url: direct, ms: Date.now() - t0, preview }
+}
+
+// ==================== 调度：按音质分层 + 优先级并发 + 串行兜底 ====================
+async function tryChain(links, ctx, ck) {
+  const errors = []
+  const linksSorted = orderLinks(links)
+  if (!linksSorted.length) return { url: null, errors: ['该音质无可用链路'] }
+
+  const batch = linksSorted.slice(0, CFG.concurrent)
+  // 试听片段（酷我 VIP 只给 22s aac）先存着，优先继续找完整曲，全挂了再用它兜底
+  const weak = []
+  if (batch.length) {
+    const results = await Promise.allSettled(batch.map(l => runLink(l, ctx)))
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i]
+      if (r.status === 'fulfilled') {
+        if (r.value.preview) { weak.push(r.value); errors.push(batch[i].name + ':仅试听片段'); continue }
+        markOk(batch[i].name, r.value.ms)
+        cacheSet(ck, r.value.url)
+        return { url: r.value.url, errors }
+      }
+      markFail(batch[i].name)
+      errors.push(batch[i].name + ':' + ((r.reason && r.reason.message) || '失败'))
+    }
+  }
+  for (const l of linksSorted.slice(CFG.concurrent)) {
+    try {
+      const r = await runLink(l, ctx)
+      if (r.preview) { weak.push(r); errors.push(l.name + ':仅试听片段'); continue }
+      markOk(l.name, r.ms)
+      cacheSet(ck, r.url)
+      return { url: r.url, errors }
+    } catch (e) {
+      markFail(l.name)
+      errors.push(l.name + ':' + (e.message || '失败'))
+    }
