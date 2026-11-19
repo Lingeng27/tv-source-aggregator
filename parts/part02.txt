@@ -95,3 +95,4 @@ function selectQuality(requested, list) {
   const idx = Q_ORDER.indexOf(q)
   if (idx >= 0) {
     for (let i = idx; i < Q_ORDER.length; i++) if (list.indexOf(Q_ORDER[i]) >= 0) return Q_ORDER[i]
+  }
