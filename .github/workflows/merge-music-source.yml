@@ -1,0 +1,47 @@
+name: merge-music-source
+
+# 分片上传完成后自动合并成 yyzone-music-source.js，校验通过则提交并清理 parts
+on:
+  push:
+    paths:
+      - 'parts/part*.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 合并分片并校验（字节数 + git blob sha）
+        run: node tools/merge_music_parts.js
+
+      - name: 语法检查（node --check）
+        run: node --check yyzone-music-source.js
+
+      - name: 提交产物
+        run: |
+          git config user.name 'yyzone-bot'
+          git config user.email 'bot@users.noreply.github.com'
+          git add yyzone-music-source.js 'YY Zone音源.js'
+          if git diff --cached --quiet; then
+            echo '产物无变化，跳过提交'
+          else
+            git commit -m 'build: 合并音源分片 -> yyzone-music-source.js'
+            git push
+          fi
+
+      - name: 清理分片目录
+        run: |
+          if [ -d parts ]; then
+            git rm -r --quiet parts
+            git commit -m 'chore: 清理分片目录 [skip ci]'
+            git push
+          fi
