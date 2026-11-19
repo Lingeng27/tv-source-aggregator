@@ -95,3 +95,4 @@ function probeSize(url) {
     } catch (e) { clearTimeout(timer); done({ ok: true, total: 0 }) }
   })
 }
+
