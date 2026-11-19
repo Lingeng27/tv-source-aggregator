@@ -86,3 +86,13 @@
       },
     },
     {
+      name: '溯音咪咕',
+      from: '旧包 溯音系 / 上游 922 接口',
+      needName: true,
+      build: c => `https://oiapi.net/api/MiGu_Music?msg=${enc(c.name)}&n=1&type=json`,
+      parse: (b, c) => {
+        if (!singerHit(pickField(b && b.data, ['singer', 'singers', 'artist']), c.singer)) return null
+        return pickUrl(b)
+      },
+    },
+    {
