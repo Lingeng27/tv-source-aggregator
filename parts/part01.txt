@@ -1,0 +1,98 @@
+/*!
+ * @name YY Zone🎵音源
+ * @description 五大平台(wy/tx/kw/kg/mg)聚合直链音源｜基于桌面《洛雪音乐-源》旧源包(41 个 js)逐个实测 + GitHub 上游最新版交叉比对后重建｜每条链路经真实取链 + HTTP Range 音频校验｜按音质能力分层 + 优先级并发 + 串行兜底｜链路健康度与实测延迟动态排序｜结果缓存｜音质自动降级｜kg/mg 支持按歌名跨平台兜底
+ * @version 1.3.0
+ * @author YY Zone
+ * @license MIT
+ * @update 2026-11-09
+ * @changelog
+ *   - 1.3.0 (2026-11-09) 整合 pdone 仓库 11-08 新发布的 4 个源（xinglan 星澜 v4.0.2 / qingliang 轻量音源 2.1.0 / suyin 溯音 / feichangdao 非常刀 v5）里实测可用的新端点，链路 31 条：
+ *     · tx 新增「讯汇QQ」api.xunhuisi.store（实测两首 mid 全出完整曲，返回 .m4a，播放器内核解码 269.8s 正常）、「lzmhhhQQ」music.lzmhhh.com POST 表单
+ *     · wy 新增「FFAPI网易」ffapi.cn（standard/exhigh/lossless 三档全通，lossless 是真 flac 27MB，内核解码 238.7s 正常）、「lzmhhh网易」、「bileizhen网易」（302 直跳音频流）
+ *     · kw 新增「海棠w酷我」musicapi.haitangw.net（302 跳真实音频；免费曲完整 8.4MB mp3，VIP 曲仍是 22s 试听，已被试听识别拦下）
+ *     · 新增 asStream 链路类型：build() 直接给可播地址（302 型接口），并用 Content-Range 总字节数 < 500KB 判定试听片段
+ *     · 实测排除：api.chksz.top（域名不可达）、music.haitangw.cc/kgqq/kg.php（401 has not any level）、music.haitangw.cc/musicapi/mg.php（404）、m.kugou.com playInfo（url 为空，需带账号 cookie）、ncm.kangqiovo / api.yutangxiaowu / metings.qjqq（参数格式不符 400）
+ *     · 汽水：feichangdao 的汽水入口（api.qishui.com/luna/h5/track + api-vehicle.volcengine.com 搜索）仍需汽水自有 track_id，且历史实测抖音/汽水链只有 60s 试听，本轮继续不接入
+ *   - 1.2.1 (2026-11-09) 实测播放器内核：酷我 VIP/付费曲所有链路都只给 aac 22s 试听（duration=22, bitrate=48, format=aac），表现为"能出声但播一半就断"。现改为优先拿完整曲，仅当全部链路都只有试听时才兜底返回，并在 console 提示
+ *   - 1.2.0 (2026-11-09) 修复「酷我在手机版播放器能取链但不出声」：
+ *     · 根因1 —— 接口返回的酷我 CDN 直链是 http://（car-er / other-er），Android 播放器会拦明文请求；现已把所有 *.kuwo.cn 直链强制改写为 https（实测 http/https 均支持 206 audio/mpeg，改写无副作用）
+ *     · 根因2 —— 可播放性预检把"拿不到 statusCode(code=0)"当成死链；手机版 request 对二进制流不回 statusCode，会被整条判死。现改为仅在明确 4xx/5xx 时判死
+ *     · 酷我链路顺序回到 1010 v1.0.0 已验证可用的三条打头（nmobi → mobi → antiserver），新增的车机/fish/surl/HYW 退为补充
+ *   - 1.1.0 (2026-11-07) 二轮复核：GitHub 上游最新版 20 个文件 + 汽水专线全部实测，结论并入下方注释；链路维持 25 条（本轮未发现可用新端点）
+ *     · 汽水音乐：抖音官方 seo_track 免登录即可取到可播放流，但三档清晰度的 Duration 都是 60.001s（试听片段）；第三方汽水中转 api.vsaa.cn/api/music.qishui.vip 返回 404，api.qs.vip / api.qs.la 域名已消失；星海后端 source=qs 必须带汽水 songmid，取到的同样是 60s 抖音流 —— 故不接入汽水平台，避免"能播但只播 60 秒"
+ *     · 六音 SixYin（pdone 仓库 v1.2.1）：与本地包同版本号，加载即自检失败（提示前往 sixyin.com），无可移植端点
+ *     · 全豆要[聚合音源] v9.3：wy/kw/kg 320k 能出链，但独有端点已废 —— music.haitangw.cc/kgqq/kg.php 返回 {"code":201,"msg":"error"}、musicapi.haitangw.net 302、175.27.166.236 404、念心 music.nxinxz.com 404；其可用部分与本文件既有链路同源，故无新增
+ *     · 上游最新版实测（320k）：HelloWorld v260925 5/5、裤佬 3.0.0 4/5、墨澜 2.3.5 3/5、杰翔 2.3.0 3/5、fish v1.9.0 5/5、Hei 2.2.1 0/5；出链主机仍是 星海 / HYW / cyapi / oiapi / 酷我车机，与既有链路同源，没有新端点
+ *     · 星海 3.2.17 的通用后端（yy.zddyr.top/lx/api/?source=qq|migu）返回 403「仅对认证用户开放」，只有 kg 分支对外开放，本文件已在使用
+ *     · 结论：本轮上游生态没有出现"新的、可移植的"取链入口；旧包与上游大范围停服，能稳定工作的仍是本文件这 25 条
+ *   - 1.0.0 (2026-11-07) 整合《洛雪音乐-源》旧包与上游最新版，重建 25 条链路：wy 6 / tx 7 / kw 7 / kg 2 / mg 3
+ *   - 旧包实测结论（26 个代表性源，逐条跑真实取链 + 音频字节探测）：
+ *     · 长青SVIP v1.2.0（全平台无损）：解出的 haitangw / 175.27.166.236 五平台全灭；更新清单 13413.kstore.vip 返回 401 domain name is invalid
+ *     · 聚合API v3.0.0(lerd.sukimon.me) / 聚合API v2.0.0(hhlqilongzhu.cn) / 音乐下载器 v4(api.v2.sukimon.me)：域名级死亡或证书过期
+ *     · 六音 v1.0.7 / v1.1.0 / v1.2.0 / v1.2.1：加载即自检失败（作者已下线，指向 sixyin.com）
+ *     · ikun v7 / v103 / v513：api.ikunshare.top 全平台 10s 超时；lxmusic.ikunshare.com、api.ikunshare.com 域名已消失
+ *     · fish v1.0.1(本地) / 肥猫不肥 / monster v1.5.5 / 無名：HTTP 层可达但业务层拒绝（unknow error / failed），無名带防改名自检
+ *     · 至尊源 v0.8.4(110.42.36.53:1314) / 梓澄二代(103.239.247.51:9763) / nya(103.40.13.21:9866)：超时或连接被拒
+ *     · 晴天 v1.1.2 / FreeListen 1.1.2(原小熊猫)：走各平台官方接口，无用户 cookie 必然 Invalid cookie（属自定义账号源，不适合公共分发）
+ *     · 野花 / 野草 / LX公众号 v3.0：混淆 + 宿主头校验（source-ver）或自检缺函数，无法在通用宿主外跑通
+ *   - 旧包中唯一仍成体系的：Huibq —— 本地版指向 render.niuma666bet.buzz 已死，在线最新版(jsdelivr / keep-alive 仓库)指向 lxmusicapi.onrender.com + share-v3 仍可用，本文件沿用
+ *   - 上游最新版实测：pdone/fish(latest) 五平台 320k 全通，但 wy/tx 走的是带账号 uin 的官方签名链、不可移植；可移植的部分是酷我车机 source=kwplayercar_ar_6.0.1.0_apk_keluze.apk，已作为 kw 新链路接入
+ *   - 新增「酷我检索备用」跨平台兜底（kg/mg）：酷我搜索按歌名+歌手取 rid，再走车机接口取链；歌名必须精确相等且排除伴奏/cover/现场/串烧，否则直接放弃，宁可失败也不串歌
+ *   - 新增：kg/mg 在缺少歌曲 ID 时，也能靠歌名走通兜底链路（旧版只能报"缺少歌曲 ID"）
+ *   - 当日实测覆盖：wy 6/6、tx 7/7、kw 7/7、kg 2/2、mg 3/3 均可取到可播放直链
+ *   - 已知波动：星海KG 的 128k 档偶发 HTTP 429（上游限流），此时由「酷我检索备用」兜底；星海KG 的 flac 档时快时慢（0.3~18s），已用前后预检超时兜住
+ */
+
+const { EVENT_NAMES, request, on, send } = globalThis.lx
+
+// ==================== 可调参数 ====================
+const CFG = {
+  reqTimeout: 9000,       // 单条链路超时(ms)
+  concurrent: 3,          // 首批并发链路数
+  cacheTTL: 3 * 60 * 60 * 1000,  // 缓存有效期 3 小时
+  cacheMax: 600,          // 缓存最大条目
+  failThreshold: 3,       // 连续失败多少次后冷却
+  cooldown: 10 * 60 * 1000,       // 冷却时间 10 分钟
+  enablePrecheck: true,   // 取到直链后做可播放性校验
+  precheckTimeout: 3500,  // 预检超时视为可用（不阻塞）
+  enableFallback: true,   // 目标音质全部失败时，降级到相邻音质
+}
+
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+const UA_ANDROID = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
+const TAG = '[YY Zone]'
+
+// ==================== 平台与音质 ====================
+const PLATFORM_NAMES = { wy: '网易云音乐', tx: 'QQ音乐', kw: '酷我音乐', kg: '酷狗音乐', mg: '咪咕音乐' }
+
+const PLATFORM_QUALITY = {
+  wy: ['flac', '320k', '192k', '128k'],
+  tx: ['flac', '320k', '128k'],
+  kw: ['flac', '320k', '192k', '128k'],
+  kg: ['flac', '320k', '128k'],
+  mg: ['320k', '128k'],
+}
+
+// 音质从高到低，用于降级
+const Q_ORDER = ['flac24bit', 'flac', '320k', '192k', '128k']
+
+// ==================== HTTP 层 ====================
+function httpGet(url, opts = {}) {
+  return new Promise((resolve, reject) => {
+    const options = {
+      method: opts.method || 'GET',
+      timeout: opts.timeout || CFG.reqTimeout,
+      headers: Object.assign({ 'User-Agent': UA }, opts.headers || {}),
+    }
+    if (opts.body) options.body = opts.body
+    request(url, options, (err, res) => {
+      if (err) return reject(new Error('请求失败:' + (err && err.message ? err.message : err)))
+      const status = (res && res.statusCode) || 0
+      if (status >= 400) return reject(new Error('HTTP ' + status))
+      let body = res && res.body
+      if (typeof body === 'string') {
+        const t = body.trim()
+        if (t.charAt(0) === '{' || t.charAt(0) === '[' || t.charAt(0) === '"') {
+          try { body = JSON.parse(t) } catch (e) { /* 保持原始字符串 */ }
+        }
+      }
