@@ -1,4 +1,3 @@
-  }
   return list[list.length - 1]
 }
 
@@ -27,7 +26,7 @@ const H_JSON = { Accept: 'application/json' }
 const H_WY = { Referer: 'https://music.163.com/' }
 const H_KW = { Referer: 'https://www.kuwo.cn/' }
 
-// ==================== 酷我检索（跨平台兜底用） ====================
+// ==================== 酷我检索（跨平台兜底用） ==================== */
 const KUWO_CAR_SRC = 'kwplayercar_ar_6.0.1.0_apk_keluze.apk'
 
 /** 解析酷我搜索的伪 JSON（单引号 + &nbsp; 实体）：按 MUSICRID 定位，取窗口内 NAME / ARTIST */
@@ -96,3 +95,4 @@ const CHAIN = {
     {
       name: '星海GD',
       from: '上游 星海 / GD Studio 公开接口',
+      build: c => `https://music-api.gdstudio.xyz/api.php?types=url&source=netease&id=${enc(c.id)}&br=${GD_BR[c.q] || '320'}`,
