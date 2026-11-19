@@ -1,0 +1,90 @@
+  }
+  if (weak.length) {
+    // 所有链路都只有试听 —— 至少把能出声的片段交出去，不让整首歌直接失败
+    cacheSet(ck, weak[0].url)
+    return { url: weak[0].url, errors, preview: true }
+  }
+  return { url: null, errors }
+}
+
+async function getUrl(platform, musicInfo, requestedQuality) {
+  const qualitys = PLATFORM_QUALITY[platform]
+  if (!qualitys) throw new Error('不支持的平台: ' + platform)
+  const wantQ = selectQuality(requestedQuality, qualitys)
+  const id = getSongId(platform, musicInfo)
+  const name = getSongName(musicInfo)
+  const singer = getSinger(musicInfo)
+  if (!id && !name) throw new Error('缺少歌曲 ID / 歌名')
+
+  const ctx = { id, name, singer, q: wantQ, platform }
+
+  const ck = platform + ':' + (id || name) + ':' + wantQ
+  const cached = cacheGet(ck)
+  if (cached) return cached
+
+  // 先按"能否应付该音质"分层；缺 ID 时只保留按歌名就能跑的链路
+  const all = (CHAIN[platform] || []).filter(l => !l.needName || name).filter(l => l.needName || id)
+  const usable = all.filter(l => !l.q || l.q.indexOf(wantQ) >= 0)
+  const errors = []
+  let res = await tryChain(usable, ctx, ck)
+  if (res.url) {
+    if (res.preview) console.log(`${TAG} ${platform} ${wantQ} 仅取到试听片段（付费曲只给 ~22s，播放会提前结束）`)
+    return res.url
+  }
+  errors.push.apply(errors, res.errors)
+
+  // 该音质专属链路全挂 → 允许能力更宽的链路顶上（可能音质略降）
+  const rest = all.filter(l => l.q && l.q.indexOf(wantQ) < 0 && l.q.indexOf('320k') >= 0)
+  if (rest.length && wantQ !== '128k') {
+    const ctx2 = Object.assign({}, ctx, { q: '320k' })
+    res = await tryChain(rest, ctx2, ck)
+    if (res.url) {
+      console.log(`${TAG} ${platform} ${wantQ} 无专属链路，已用 320k 链路顶上`)
+      return res.url
+    }
+    errors.push.apply(errors, res.errors)
+  }
+
+  // 低音质请求失败 → 逐级降档
+  if (CFG.enableFallback) {
+    for (const alt of degradeList(wantQ, qualitys)) {
+      const ctx3 = Object.assign({}, ctx, { q: alt })
+      const pool = all.filter(l => !l.q || l.q.indexOf(alt) >= 0)
+      const r2 = await tryChain(pool, ctx3, platform + ':' + (id || name) + ':' + alt)
+      if (r2.url) {
+        console.log(`${TAG} ${platform} ${wantQ} 全链失败，已降级到 ${alt}`)
+        cacheSet(ck, r2.url)
+        return r2.url
+      }
+    }
+  }
+  console.log(`${TAG} ${platform} ${wantQ} 全部链路失败 → ` + errors.join(' | '))
+  throw new Error('全部链路失败 → ' + errors.join(' | '))
+}
+
+// ==================== 注册 ====================
+const sourceConfig = {}
+Object.keys(PLATFORM_QUALITY).forEach(p => {
+  sourceConfig[p] = {
+    name: PLATFORM_NAMES[p],
+    type: 'music',
+    actions: ['musicUrl'],
+    qualitys: PLATFORM_QUALITY[p],
+  }
+})
+
+on(EVENT_NAMES.request, ({ action, source, info }) => {
+  if (action !== 'musicUrl') return Promise.reject(new Error('action not support'))
+  if (!sourceConfig[source]) return Promise.reject(new Error('source not support'))
+  const musicInfo = info && info.musicInfo
+  if (!musicInfo) return Promise.reject(new Error('请求参数不完整'))
+  return getUrl(source, musicInfo, (info && info.type) || '128k')
+})
+
+send(EVENT_NAMES.inited, { openDevTools: false, sources: sourceConfig })
+
+// 供离线测试脚本调用（载入后可用 node test-chains.js 逐链路实测）
+globalThis.__X = { CFG, CHAIN, getUrl, runLink, tryChain, pickUrl, health, sourceConfig, parseKuwoSearch, pickKuwoExact, toSecure }
+
+console.log(`${TAG} YY Zone🎵音源 v1.3.0 已加载 —— wy/tx/kw/kg/mg，共 ` +
+  Object.keys(CHAIN).map(p => p + ':' + CHAIN[p].length).join(' / '))
