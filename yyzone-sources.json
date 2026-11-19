@@ -1,0 +1,151 @@
+{
+  "name": "YY ZONE 点播源库",
+  "updatedAt": "2026-11-19T11:14:22Z",
+  "count": 13,
+  "unavailable": [],
+  "sources": [
+    {
+      "id": "cms_liangzi",
+      "name": "量子资源",
+      "api": "https://lzizy1.com/api.php/provide/vod/from/lzm3u8/",
+      "tags": ["片库最大", "1080P", "主力", "短剧全"],
+      "priority": 0,
+      "searchable": true,
+      "ms": 1213,
+      "total": 164433,
+      "path": "from"
+    },
+    {
+      "id": "cms_360",
+      "name": "360资源",
+      "api": "https://360zy.com/api.php/provide/vod/from/360zy/",
+      "tags": ["1080P", "响应快", "通用"],
+      "priority": 1,
+      "searchable": true,
+      "ms": 670,
+      "total": 75407,
+      "path": "from"
+    },
+    {
+      "id": "cms_jisu",
+      "name": "极速资源",
+      "api": "https://jszyapi.com/api.php/provide/vod/from/jsm3u8/",
+      "tags": ["最快", "动漫", "短剧"],
+      "priority": 2,
+      "searchable": true,
+      "ms": 927,
+      "total": 117025,
+      "path": "from"
+    },
+    {
+      "id": "cms_jinying",
+      "name": "金鹰资源",
+      "api": "https://jyzyapi.com/api.php/provide/vod/from/jinyingm3u8/",
+      "tags": ["响应快", "综合", "仅列表"],
+      "priority": 3,
+      "searchable": false,
+      "ms": 1688,
+      "total": 118677,
+      "path": "from"
+    },
+    {
+      "id": "cms_huya",
+      "name": "虎牙采集",
+      "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/",
+      "tags": ["响应快", "剧集", "仅列表"],
+      "priority": 4,
+      "searchable": false,
+      "ms": 2444,
+      "total": 117614,
+      "path": "from"
+    },
+    {
+      "id": "cms_hongniu",
+      "name": "红牛资源",
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/",
+      "tags": ["更新及时", "体育"],
+      "priority": 5,
+      "searchable": true,
+      "ms": 877,
+      "total": 118100,
+      "path": "from"
+    },
+    {
+      "id": "cms_haohua",
+      "name": "豪华资源",
+      "api": "https://hhzyapi.com/api.php/provide/vod/from/hhm3u8/",
+      "tags": ["综合", "体育"],
+      "priority": 6,
+      "searchable": true,
+      "ms": 2607,
+      "total": 117784,
+      "path": "from"
+    },
+    {
+      "id": "cms_wujin",
+      "name": "无尽资源",
+      "api": "https://api.wujinapi.com/api.php/provide/vod/from/wjm3u8/",
+      "tags": ["片库较大", "体育"],
+      "priority": 7,
+      "searchable": true,
+      "ms": 667,
+      "total": 124384,
+      "path": "from"
+    },
+    {
+      "id": "cms_guangsu",
+      "name": "光速资源",
+      "api": "https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/",
+      "tags": ["体育", "综合", "仅列表"],
+      "priority": 8,
+      "searchable": false,
+      "ms": 968,
+      "total": 118691,
+      "path": "from"
+    },
+    {
+      "id": "cms_modu",
+      "name": "魔都资源",
+      "api": "https://www.mdzyapi.com/api.php/provide/vod/from/modum3u8/",
+      "tags": ["1080P", "综合"],
+      "priority": 9,
+      "searchable": true,
+      "ms": 2831,
+      "total": 92040,
+      "path": "from"
+    },
+    {
+      "id": "cms_feifan",
+      "name": "非凡资源",
+      "api": "https://ffzy5.tv/api.php/provide/vod/from/ffm3u8/",
+      "tags": ["1080P", "剧集全", "欧美日韩"],
+      "priority": 10,
+      "searchable": true,
+      "ms": 961,
+      "total": 99186,
+      "path": "from"
+    },
+    {
+      "id": "cms_modu5",
+      "name": "魔都资源(备线)",
+      "api": "https://caiji.moduapi.cc/api.php/provide/vod/from/modum3u8/",
+      "tags": ["1080P", "备用线路"],
+      "priority": 11,
+      "searchable": true,
+      "ms": 1264,
+      "total": 92040,
+      "path": "from"
+    },
+    {
+      "id": "cms_baidu",
+      "name": "百度资源",
+      "api": "https://api.apibdzy.com/api.php/provide/vod/from/dbm3u8/",
+      "tags": ["综艺", "短剧"],
+      "priority": 12,
+      "searchable": true,
+      "ms": 2541,
+      "total": 49768,
+      "path": "from"
+    }
+  ]
+}
