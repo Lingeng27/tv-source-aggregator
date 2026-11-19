@@ -22,7 +22,9 @@ jobs:
           python-version: "3.11"
 
       - name: Run build
-        run: python build.py
+        run: |
+          python build.py
+          python build_cms.py
 
       - name: Commit and push
         run: |

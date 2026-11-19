@@ -1,0 +1,109 @@
+[
+  {
+    "id": "cms_liangzi",
+    "name": "量子资源",
+    "tags": ["片库最大", "1080P", "主力", "短剧全"],
+    "priority": 0,
+    "line": "lzm3u8",
+    "domains": ["lzizy1.com", "cj.lziapi.com", "lziapi.com", "api.lzizy.com", "lzizy.com", "lzizy2.com"]
+  },
+  {
+    "id": "cms_360",
+    "name": "360资源",
+    "tags": ["1080P", "响应快", "通用"],
+    "priority": 1,
+    "line": "360zy",
+    "domains": ["360zy.com", "api.360zy.com", "www.360zy.com"]
+  },
+  {
+    "id": "cms_jisu",
+    "name": "极速资源",
+    "tags": ["最快", "动漫", "短剧"],
+    "priority": 2,
+    "line": "jsm3u8",
+    "domains": ["jszyapi.com", "api.jszyapi.com", "www.jszyapi.com"]
+  },
+  {
+    "id": "cms_jinying",
+    "name": "金鹰资源",
+    "tags": ["响应快", "综合", "仅列表"],
+    "priority": 3,
+    "line": "jinyingm3u8",
+    "searchable": false,
+    "domains": ["jyzyapi.com", "api.jyzyapi.com", "www.jyzyapi.com"]
+  },
+  {
+    "id": "cms_huya",
+    "name": "虎牙采集",
+    "tags": ["响应快", "剧集", "仅列表"],
+    "priority": 4,
+    "line": "hym3u8",
+    "searchable": false,
+    "domains": ["www.huyaapi.com", "huyaapi.com", "api.huyaapi.com"]
+  },
+  {
+    "id": "cms_hongniu",
+    "name": "红牛资源",
+    "tags": ["更新及时", "体育"],
+    "priority": 5,
+    "line": "hnm3u8",
+    "domains": ["www.hongniuzy2.com", "hongniuzy2.com", "api.hongniuzy2.com", "hongniuzy.com"]
+  },
+  {
+    "id": "cms_haohua",
+    "name": "豪华资源",
+    "tags": ["综合", "体育"],
+    "priority": 6,
+    "line": "hhm3u8",
+    "domains": ["hhzyapi.com", "api.hhzyapi.com", "www.hhzyapi.com"]
+  },
+  {
+    "id": "cms_wujin",
+    "name": "无尽资源",
+    "tags": ["片库较大", "体育"],
+    "priority": 7,
+    "line": "wjm3u8",
+    "domains": ["api.wujinapi.com", "wujinapi.com", "www.wujinapi.com", "wujinzy.com"]
+  },
+  {
+    "id": "cms_guangsu",
+    "name": "光速资源",
+    "tags": ["体育", "综合", "仅列表"],
+    "priority": 8,
+    "line": "gsm3u8",
+    "searchable": false,
+    "domains": ["api.guangsuapi.com", "guangsuapi.com", "www.guangsuapi.com"]
+  },
+  {
+    "id": "cms_modu",
+    "name": "魔都资源",
+    "tags": ["1080P", "综合"],
+    "priority": 9,
+    "line": "modum3u8",
+    "domains": ["www.mdzyapi.com", "mdzyapi.com", "api.mdzyapi.com"]
+  },
+  {
+    "id": "cms_feifan",
+    "name": "非凡资源",
+    "tags": ["1080P", "剧集全", "欧美日韩"],
+    "priority": 10,
+    "line": "ffm3u8",
+    "domains": ["ffzy5.tv", "cj.ffzyapi.com", "ffzyapi.com", "api.ffzyapi.com", "ffzy.tv"]
+  },
+  {
+    "id": "cms_modu5",
+    "name": "魔都资源(备线)",
+    "tags": ["1080P", "备用线路"],
+    "priority": 11,
+    "line": "modum3u8",
+    "domains": ["caiji.moduapi.cc", "api.moduapi.cc", "moduapi.cc"]
+  },
+  {
+    "id": "cms_baidu",
+    "name": "百度资源",
+    "tags": ["综艺", "短剧"],
+    "priority": 12,
+    "line": "dbm3u8",
+    "domains": ["api.apibdzy.com", "apibdzy.com", "www.apibdzy.com"]
+  }
+]
