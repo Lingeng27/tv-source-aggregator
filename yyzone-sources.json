@@ -1,151 +1,237 @@
 {
   "name": "YY ZONE 点播源库",
-  "updatedAt": "2026-11-19T11:14:22Z",
-  "count": 13,
+  "updatedAt": "2026-11-19T23:24:28Z",
+  "count": 16,
   "unavailable": [],
   "sources": [
     {
       "id": "cms_liangzi",
       "name": "量子资源",
       "api": "https://lzizy1.com/api.php/provide/vod/from/lzm3u8/",
-      "tags": ["片库最大", "1080P", "主力", "短剧全"],
+      "tags": [
+        "片库最大",
+        "1080P",
+        "主力",
+        "短剧全"
+      ],
       "priority": 0,
       "searchable": true,
-      "ms": 1213,
-      "total": 164433,
+      "ms": 542,
+      "total": 164479,
       "path": "from"
     },
     {
       "id": "cms_360",
       "name": "360资源",
       "api": "https://360zy.com/api.php/provide/vod/from/360zy/",
-      "tags": ["1080P", "响应快", "通用"],
+      "tags": [
+        "1080P",
+        "响应快",
+        "通用"
+      ],
       "priority": 1,
       "searchable": true,
-      "ms": 670,
-      "total": 75407,
+      "ms": 1522,
+      "total": 75408,
       "path": "from"
     },
     {
       "id": "cms_jisu",
       "name": "极速资源",
       "api": "https://jszyapi.com/api.php/provide/vod/from/jsm3u8/",
-      "tags": ["最快", "动漫", "短剧"],
+      "tags": [
+        "最快",
+        "动漫",
+        "短剧"
+      ],
       "priority": 2,
       "searchable": true,
-      "ms": 927,
-      "total": 117025,
+      "ms": 758,
+      "total": 117102,
       "path": "from"
     },
     {
       "id": "cms_jinying",
       "name": "金鹰资源",
       "api": "https://jyzyapi.com/api.php/provide/vod/from/jinyingm3u8/",
-      "tags": ["响应快", "综合", "仅列表"],
+      "tags": [
+        "响应快",
+        "综合",
+        "仅列表"
+      ],
       "priority": 3,
       "searchable": false,
-      "ms": 1688,
-      "total": 118677,
+      "ms": 691,
+      "total": 118754,
       "path": "from"
     },
     {
       "id": "cms_huya",
       "name": "虎牙采集",
       "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/",
-      "tags": ["响应快", "剧集", "仅列表"],
+      "tags": [
+        "响应快",
+        "剧集",
+        "仅列表"
+      ],
       "priority": 4,
       "searchable": false,
-      "ms": 2444,
-      "total": 117614,
+      "ms": 155,
+      "total": 117691,
       "path": "from"
     },
     {
       "id": "cms_hongniu",
       "name": "红牛资源",
       "api": "https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/",
-      "tags": ["更新及时", "体育"],
+      "tags": [
+        "更新及时",
+        "体育"
+      ],
       "priority": 5,
       "searchable": true,
-      "ms": 877,
-      "total": 118100,
+      "ms": 286,
+      "total": 118177,
       "path": "from"
     },
     {
       "id": "cms_haohua",
       "name": "豪华资源",
       "api": "https://hhzyapi.com/api.php/provide/vod/from/hhm3u8/",
-      "tags": ["综合", "体育"],
+      "tags": [
+        "综合",
+        "体育"
+      ],
       "priority": 6,
       "searchable": true,
-      "ms": 2607,
-      "total": 117784,
+      "ms": 330,
+      "total": 117861,
       "path": "from"
     },
     {
       "id": "cms_wujin",
       "name": "无尽资源",
       "api": "https://api.wujinapi.com/api.php/provide/vod/from/wjm3u8/",
-      "tags": ["片库较大", "体育"],
+      "tags": [
+        "片库较大",
+        "体育"
+      ],
       "priority": 7,
       "searchable": true,
-      "ms": 667,
-      "total": 124384,
+      "ms": 233,
+      "total": 124386,
       "path": "from"
     },
     {
       "id": "cms_guangsu",
       "name": "光速资源",
       "api": "https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/",
-      "tags": ["体育", "综合", "仅列表"],
+      "tags": [
+        "体育",
+        "综合",
+        "仅列表"
+      ],
       "priority": 8,
       "searchable": false,
-      "ms": 968,
-      "total": 118691,
+      "ms": 223,
+      "total": 118768,
       "path": "from"
     },
     {
       "id": "cms_modu",
       "name": "魔都资源",
       "api": "https://www.mdzyapi.com/api.php/provide/vod/from/modum3u8/",
-      "tags": ["1080P", "综合"],
+      "tags": [
+        "1080P",
+        "综合"
+      ],
       "priority": 9,
       "searchable": true,
-      "ms": 2831,
-      "total": 92040,
+      "ms": 464,
+      "total": 92042,
       "path": "from"
     },
     {
       "id": "cms_feifan",
       "name": "非凡资源",
       "api": "https://ffzy5.tv/api.php/provide/vod/from/ffm3u8/",
-      "tags": ["1080P", "剧集全", "欧美日韩"],
+      "tags": [
+        "1080P",
+        "剧集全",
+        "欧美日韩"
+      ],
       "priority": 10,
       "searchable": true,
-      "ms": 961,
-      "total": 99186,
+      "ms": 965,
+      "total": 99191,
       "path": "from"
     },
     {
       "id": "cms_modu5",
       "name": "魔都资源(备线)",
       "api": "https://caiji.moduapi.cc/api.php/provide/vod/from/modum3u8/",
-      "tags": ["1080P", "备用线路"],
+      "tags": [
+        "1080P",
+        "备用线路"
+      ],
       "priority": 11,
       "searchable": true,
-      "ms": 1264,
-      "total": 92040,
+      "ms": 482,
+      "total": 92042,
       "path": "from"
     },
     {
       "id": "cms_baidu",
       "name": "百度资源",
       "api": "https://api.apibdzy.com/api.php/provide/vod/from/dbm3u8/",
-      "tags": ["综艺", "短剧"],
+      "tags": [
+        "综艺",
+        "短剧"
+      ],
       "priority": 12,
       "searchable": true,
-      "ms": 2541,
-      "total": 49768,
+      "ms": 390,
+      "total": 49770,
       "path": "from"
+    },
+    {
+      "id": "hub_suoniapi_com",
+      "name": "🐉┃索尼┃高清",
+      "api": "https://suoniapi.com/api.php/provide/vod/?ac=list",
+      "tags": [
+        "自动发现"
+      ],
+      "priority": 60,
+      "searchable": true,
+      "ms": 241,
+      "total": 149353,
+      "path": "std"
+    },
+    {
+      "id": "hub_ffzy1_tv",
+      "name": "🥗┃非凡┃资源",
+      "api": "http://ffzy1.tv/api.php/provide/vod/",
+      "tags": [
+        "自动发现"
+      ],
+      "priority": 60,
+      "searchable": true,
+      "ms": 544,
+      "total": 99192,
+      "path": "std"
+    },
+    {
+      "id": "hub_app_bfzyapi_com",
+      "name": "🌪️暴风影音",
+      "api": "https://app.bfzyapi.com/api.php/provide/vod/",
+      "tags": [
+        "自动发现"
+      ],
+      "priority": 60,
+      "searchable": true,
+      "ms": 562,
+      "total": 173051,
+      "path": "std"
     }
   ]
 }
