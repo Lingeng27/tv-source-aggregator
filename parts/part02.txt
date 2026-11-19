@@ -1,0 +1,97 @@
+      resolve(body)
+    })
+  })
+}
+
+// ==================== 通用工具 ====================
+const BAD_EXT = /\.(jpe?g|png|gif|webp|svg|ico|css|js|json|html?|txt|xml)(\?|$)/i
+
+/** 从任意响应体中递归挑出第一个"像音频直链"的 URL */
+function pickUrl(body, depth = 0) {
+  if (!body || depth > 6) return null
+  if (typeof body === 'string') {
+    const t = body.trim()
+    if (/^https?:\/\/\S+$/.test(t) && !BAD_EXT.test(t)) return t
+    const m = /https?:\/\/[\w\-._~:/?#[\]@!$&'()*+,;=%]{20,900}/.exec(t)
+    if (m) {
+      const u = m[0].replace(/["'\\\)\\]}>,]+$/g, '')
+      if (!BAD_EXT.test(u)) return u
+    }
+    return null
+  }
+  if (Array.isArray(body)) {
+    for (const v of body) { const r = pickUrl(v, depth + 1); if (r) return r }
+    return null
+  }
+  if (typeof body === 'object') {
+    const preferred = ['url', 'musicUrl', 'music_url', 'playUrl', 'play_url', 'link', 'song_url', 'mp3', 'src', 'audio', 'download', 'data']
+    for (const k of preferred) if (body[k] != null) { const r = pickUrl(body[k], depth + 1); if (r) return r }
+    for (const k of Object.keys(body)) {
+      if (preferred.indexOf(k) >= 0) continue
+      const r = pickUrl(body[k], depth + 1)
+      if (r) return r
+    }
+  }
+  return null
+}
+
+function isLikelyAudio(url) {
+  return typeof url === 'string' && /^https?:\/\//i.test(url) && url.length > 15 && !BAD_EXT.test(url)
+}
+
+/** 取字段：按候选名依次命中 */
+function pickField(obj, names) {
+  if (!obj) return ''
+  for (const n of names) {
+    if (obj[n] !== undefined && obj[n] !== null && String(obj[n]) !== '') return String(obj[n])
+  }
+  return ''
+}
+
+/** 各平台从 musicInfo 取歌曲 ID */
+function getSongId(platform, mi) {
+  if (!mi) return ''
+  switch (platform) {
+    case 'kg': return pickField(mi, ['hash', 'songmid', 'id', 'mhash'])
+    case 'tx': return pickField(mi, ['songmid', 'mid', 'strMediaMid', 'id'])
+    case 'kw': return pickField(mi, ['songmid', 'rid', 'id'])
+    case 'mg': return pickField(mi, ['songmid', 'copyrightId', 'id'])
+    default: return pickField(mi, ['songmid', 'id'])
+  }
+}
+
+function getSongName(mi) { return pickField(mi, ['name', 'songName', 'title']) }
+function getSinger(mi) {
+  const s = pickField(mi, ['singer', 'artist', 'author'])
+  if (s && s !== 'Unknown') return s
+  const arr = mi && (mi.singers || mi.artists)
+  if (Array.isArray(arr) && arr.length) {
+    return arr.map(x => (typeof x === 'string' ? x : (x && (x.name || x.singer)) || '')).filter(Boolean).join('、')
+  }
+  return ''
+}
+
+/** 文本归一化：去掉空白、标点、HTML 实体，用于歌名/歌手比对 */
+function normText(s) {
+  return String(s || '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\\u0026/gi, '&')
+    .replace(/[\s、,，·.。&/\\'"~!?()（）【】\[\]—\-+]/g, '')
+    .toLowerCase()
+}
+
+/** 歌手粗匹配：按歌名/歌手搜索的链路用它防串歌 */
+function singerHit(a, b) {
+  if (!a || !b) return true
+  const A = normText(a), B = normText(b)
+  if (!A || !B) return true
+  return A.indexOf(B) >= 0 || B.indexOf(A) >= 0
+}
+
+/** 音质选择：请求音质不在平台音质表里时，向下取最接近档位 */
+function selectQuality(requested, list) {
+  const q = String(requested || '128k').toLowerCase()
+  if (list.indexOf(q) >= 0) return q
+  const idx = Q_ORDER.indexOf(q)
+  if (idx >= 0) {
+    for (let i = idx; i < Q_ORDER.length; i++) if (list.indexOf(Q_ORDER[i]) >= 0) return Q_ORDER[i]
