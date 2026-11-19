@@ -14,7 +14,7 @@ function pickUrl(body, depth = 0) {
     if (/^https?:\/\/\S+$/.test(t) && !BAD_EXT.test(t)) return t
     const m = /https?:\/\/[\w\-._~:/?#[\]@!$&'()*+,;=%]{20,900}/.exec(t)
     if (m) {
-      const u = m[0].replace(/["'\\\)\]}>,]+$/g, '')
+      const u = m[0].replace(/["'\\)\]}>,]+$/g, '')
       if (!BAD_EXT.test(u)) return u
     }
     return null
