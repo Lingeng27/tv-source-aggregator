@@ -1,11 +1,12 @@
 /*!
  * @name YY Zone🎵音源
  * @description 五大平台(wy/tx/kw/kg/mg)聚合直链音源｜基于桌面《洛雪音乐-源》旧源包(41 个 js)逐个实测 + GitHub 上游最新版交叉比对后重建｜每条链路经真实取链 + HTTP Range 音频校验｜按音质能力分层 + 优先级并发 + 串行兜底｜链路健康度与实测延迟动态排序｜结果缓存｜音质自动降级｜kg/mg 支持按歌名跨平台兜底
- * @version 1.3.0
+ * @version 1.3.1
  * @author YY Zone
  * @license MIT
- * @update 2026-11-09
+ * @update 2026-11-19
  * @changelog
+ *   - 1.3.1 (2026-11-19) 文件名统一为 yyzone-music-source.js（仓库与安装目录都不再带 lx 字样）；取链逻辑零改动，只把「版本号与文件名约定」跟源库对齐，方便客户端版本比对
  *   - 1.3.0 (2026-11-09) 整合 pdone 仓库 11-08 新发布的 4 个源（xinglan 星澜 v4.0.2 / qingliang 轻量音源 2.1.0 / suyin 溯音 / feichangdao 非常刀 v5）里实测可用的新端点，链路 31 条：
  *     · tx 新增「讯汇QQ」api.xunhuisi.store（实测两首 mid 全出完整曲，返回 .m4a，播放器内核解码 269.8s 正常）、「lzmhhhQQ」music.lzmhhh.com POST 表单
  *     · wy 新增「FFAPI网易」ffapi.cn（standard/exhigh/lossless 三档全通，lossless 是真 flac 27MB，内核解码 238.7s 正常）、「lzmhhh网易」、「bileizhen网易」（302 直跳音频流）
@@ -772,5 +773,5 @@ send(EVENT_NAMES.inited, { openDevTools: false, sources: sourceConfig })
 // 供离线测试脚本调用（载入后可用 node test-chains.js 逐链路实测）
 globalThis.__X = { CFG, CHAIN, getUrl, runLink, tryChain, pickUrl, health, sourceConfig, parseKuwoSearch, pickKuwoExact, toSecure }
 
-console.log(`${TAG} YY Zone🎵音源 v1.3.0 已加载 —— wy/tx/kw/kg/mg，共 ` +
+console.log(`${TAG} YY Zone🎵音源 v1.3.1 已加载 —— wy/tx/kw/kg/mg，共 ` +
   Object.keys(CHAIN).map(p => p + ':' + CHAIN[p].length).join(' / '))
