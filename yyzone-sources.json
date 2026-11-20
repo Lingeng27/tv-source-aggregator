@@ -1,6 +1,6 @@
 {
   "name": "YY ZONE 点播源库",
-  "updatedAt": "2026-11-19T23:24:28Z",
+  "updatedAt": "2026-11-20T22:57:47Z",
   "count": 16,
   "unavailable": [],
   "sources": [
@@ -16,8 +16,8 @@
       ],
       "priority": 0,
       "searchable": true,
-      "ms": 542,
-      "total": 164479,
+      "ms": 352,
+      "total": 164663,
       "path": "from"
     },
     {
@@ -31,8 +31,8 @@
       ],
       "priority": 1,
       "searchable": true,
-      "ms": 1522,
-      "total": 75408,
+      "ms": 1161,
+      "total": 75480,
       "path": "from"
     },
     {
@@ -46,8 +46,8 @@
       ],
       "priority": 2,
       "searchable": true,
-      "ms": 758,
-      "total": 117102,
+      "ms": 195,
+      "total": 117184,
       "path": "from"
     },
     {
@@ -61,8 +61,8 @@
       ],
       "priority": 3,
       "searchable": false,
-      "ms": 691,
-      "total": 118754,
+      "ms": 221,
+      "total": 118836,
       "path": "from"
     },
     {
@@ -76,8 +76,8 @@
       ],
       "priority": 4,
       "searchable": false,
-      "ms": 155,
-      "total": 117691,
+      "ms": 153,
+      "total": 117773,
       "path": "from"
     },
     {
@@ -90,8 +90,8 @@
       ],
       "priority": 5,
       "searchable": true,
-      "ms": 286,
-      "total": 118177,
+      "ms": 215,
+      "total": 118259,
       "path": "from"
     },
     {
@@ -104,8 +104,8 @@
       ],
       "priority": 6,
       "searchable": true,
-      "ms": 330,
-      "total": 117861,
+      "ms": 286,
+      "total": 117943,
       "path": "from"
     },
     {
@@ -118,8 +118,8 @@
       ],
       "priority": 7,
       "searchable": true,
-      "ms": 233,
-      "total": 124386,
+      "ms": 231,
+      "total": 124467,
       "path": "from"
     },
     {
@@ -133,8 +133,8 @@
       ],
       "priority": 8,
       "searchable": false,
-      "ms": 223,
-      "total": 118768,
+      "ms": 206,
+      "total": 118850,
       "path": "from"
     },
     {
@@ -147,8 +147,8 @@
       ],
       "priority": 9,
       "searchable": true,
-      "ms": 464,
-      "total": 92042,
+      "ms": 562,
+      "total": 92100,
       "path": "from"
     },
     {
@@ -162,8 +162,8 @@
       ],
       "priority": 10,
       "searchable": true,
-      "ms": 965,
-      "total": 99191,
+      "ms": 1267,
+      "total": 99200,
       "path": "from"
     },
     {
@@ -176,8 +176,8 @@
       ],
       "priority": 11,
       "searchable": true,
-      "ms": 482,
-      "total": 92042,
+      "ms": 556,
+      "total": 92100,
       "path": "from"
     },
     {
@@ -190,22 +190,9 @@
       ],
       "priority": 12,
       "searchable": true,
-      "ms": 390,
-      "total": 49770,
+      "ms": 367,
+      "total": 49784,
       "path": "from"
-    },
-    {
-      "id": "hub_suoniapi_com",
-      "name": "🐉┃索尼┃高清",
-      "api": "https://suoniapi.com/api.php/provide/vod/?ac=list",
-      "tags": [
-        "自动发现"
-      ],
-      "priority": 60,
-      "searchable": true,
-      "ms": 241,
-      "total": 149353,
-      "path": "std"
     },
     {
       "id": "hub_ffzy1_tv",
@@ -216,8 +203,21 @@
       ],
       "priority": 60,
       "searchable": true,
-      "ms": 544,
-      "total": 99192,
+      "ms": 121,
+      "total": 99201,
+      "path": "std"
+    },
+    {
+      "id": "hub_suoniapi_com",
+      "name": "🐉┃索尼┃高清",
+      "api": "https://suoniapi.com/api.php/provide/vod/?ac=list",
+      "tags": [
+        "自动发现"
+      ],
+      "priority": 60,
+      "searchable": true,
+      "ms": 259,
+      "total": 149448,
       "path": "std"
     },
     {
@@ -229,8 +229,8 @@
       ],
       "priority": 60,
       "searchable": true,
-      "ms": 562,
-      "total": 173051,
+      "ms": 441,
+      "total": 173171,
       "path": "std"
     }
   ]
