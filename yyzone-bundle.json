@@ -1,13 +1,19 @@
 {
   "yyzone": 1,
   "name": "YY ZONE 源包",
-  "updatedAt": "2026-11-20",
+  "updatedAt": "2026-11-21",
+  "music": "https://cdn.jsdelivr.net/gh/Lingeng27/yyzone-source-aggregator@main/yyzone-music-source.js",
   "vod": [
     {
       "id": "cms_liangzi",
       "name": "量子资源",
       "api": "https://lzizy1.com/api.php/provide/vod/from/lzm3u8/",
-      "tags": ["片库最大", "1080P", "主力", "短剧全"],
+      "tags": [
+        "片库最大",
+        "1080P",
+        "主力",
+        "短剧全"
+      ],
       "priority": 0,
       "searchable": true
     },
@@ -15,7 +21,11 @@
       "id": "cms_360",
       "name": "360资源",
       "api": "https://360zy.com/api.php/provide/vod/from/360zy/",
-      "tags": ["1080P", "响应快", "通用"],
+      "tags": [
+        "1080P",
+        "响应快",
+        "通用"
+      ],
       "priority": 1,
       "searchable": true
     },
@@ -23,7 +33,11 @@
       "id": "cms_jisu",
       "name": "极速资源",
       "api": "https://jszyapi.com/api.php/provide/vod/from/jsm3u8/",
-      "tags": ["最快", "动漫", "短剧"],
+      "tags": [
+        "最快",
+        "动漫",
+        "短剧"
+      ],
       "priority": 2,
       "searchable": true
     },
@@ -31,7 +45,11 @@
       "id": "cms_jinying",
       "name": "金鹰资源",
       "api": "https://jyzyapi.com/api.php/provide/vod/from/jinyingm3u8/",
-      "tags": ["响应快", "综合", "仅列表"],
+      "tags": [
+        "响应快",
+        "综合",
+        "仅列表"
+      ],
       "priority": 3,
       "searchable": false
     },
@@ -39,7 +57,11 @@
       "id": "cms_huya",
       "name": "虎牙采集",
       "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/",
-      "tags": ["响应快", "剧集", "仅列表"],
+      "tags": [
+        "响应快",
+        "剧集",
+        "仅列表"
+      ],
       "priority": 4,
       "searchable": false
     },
@@ -47,7 +69,10 @@
       "id": "cms_hongniu",
       "name": "红牛资源",
       "api": "https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/",
-      "tags": ["更新及时", "体育"],
+      "tags": [
+        "更新及时",
+        "体育"
+      ],
       "priority": 5,
       "searchable": true
     },
@@ -55,7 +80,10 @@
       "id": "cms_haohua",
       "name": "豪华资源",
       "api": "https://hhzyapi.com/api.php/provide/vod/from/hhm3u8/",
-      "tags": ["综合", "体育"],
+      "tags": [
+        "综合",
+        "体育"
+      ],
       "priority": 6,
       "searchable": true
     },
@@ -63,7 +91,10 @@
       "id": "cms_wujin",
       "name": "无尽资源",
       "api": "https://api.wujinapi.com/api.php/provide/vod/from/wjm3u8/",
-      "tags": ["片库较大", "体育"],
+      "tags": [
+        "片库较大",
+        "体育"
+      ],
       "priority": 7,
       "searchable": true
     },
@@ -71,7 +102,11 @@
       "id": "cms_guangsu",
       "name": "光速资源",
       "api": "https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/",
-      "tags": ["体育", "综合", "仅列表"],
+      "tags": [
+        "体育",
+        "综合",
+        "仅列表"
+      ],
       "priority": 8,
       "searchable": false
     },
@@ -79,7 +114,10 @@
       "id": "cms_modu",
       "name": "魔都资源",
       "api": "https://www.mdzyapi.com/api.php/provide/vod/from/modum3u8/",
-      "tags": ["1080P", "综合"],
+      "tags": [
+        "1080P",
+        "综合"
+      ],
       "priority": 9,
       "searchable": true
     },
@@ -87,7 +125,11 @@
       "id": "cms_feifan",
       "name": "非凡资源",
       "api": "https://ffzy5.tv/api.php/provide/vod/from/ffm3u8/",
-      "tags": ["1080P", "剧集全", "欧美日韩"],
+      "tags": [
+        "1080P",
+        "剧集全",
+        "欧美日韩"
+      ],
       "priority": 10,
       "searchable": true
     },
@@ -95,7 +137,10 @@
       "id": "cms_modu5",
       "name": "魔都资源(备线)",
       "api": "https://caiji.moduapi.cc/api.php/provide/vod/from/modum3u8/",
-      "tags": ["1080P", "备用线路"],
+      "tags": [
+        "1080P",
+        "备用线路"
+      ],
       "priority": 11,
       "searchable": true
     },
@@ -103,7 +148,10 @@
       "id": "cms_baidu",
       "name": "百度资源",
       "api": "https://api.apibdzy.com/api.php/provide/vod/from/dbm3u8/",
-      "tags": ["综艺", "短剧"],
+      "tags": [
+        "综艺",
+        "短剧"
+      ],
       "priority": 12,
       "searchable": true
     }
